@@ -74,9 +74,6 @@ int dijkstra(int source_node, int destination_node, int matrix_range, int Matrix
 		
 
 		return distance[destination_node];
-		
-
-
 }   
 
 

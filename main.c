@@ -7,7 +7,7 @@
 /* Here is the dijkstra algorithm for counting the shortest path.  */
 int dijkstra(int source_node, int destination_node, int matrix_range, int MatrixTable[matrix_range][matrix_range]){
 		
-		int distance[matrix_range], prev_node[matrix_range], i,m, min_dis, start, d,j;
+		int distance[matrix_range], prev_node[matrix_range], i,m, min_dis, start, d,j, pathcount = 0;
 		int select[matrix_range];
 		char path[matrix_range];
 
@@ -29,6 +29,15 @@ int dijkstra(int source_node, int destination_node, int matrix_range, int Matrix
 				for(i=0; i < matrix_range; i++){
 				
 						d = distance[start] + MatrixTable[start][i];
+						if(i == destination_node && MatrixTable[start][i] != INFINITE){
+						
+								distance[i] = d;
+								prev_node[i] = start;
+								min_dis = distance[i];
+								m = i;
+								break;
+						}
+
 						if(d < distance[i] && select[i] == 0){
 						
 								distance[i] = d;
@@ -42,22 +51,28 @@ int dijkstra(int source_node, int destination_node, int matrix_range, int Matrix
 				}
 				start = m;
 				select[start] = 1;
-
+				//printf("%d ", m);
+				//path[pathcount] = m;
+				//pathcount++;
 		}
 		start = destination_node;
 		i = 0;
+		
+		
 		while(start != -1){
 		
-				path[i++] = start + 65;
+				path[j++] = start;
 				start = prev_node[start];
 		}
-		path[i] = '\0';
+		path[j] = '\0';
 		//strrev(path);
-		for(i = 0; i< matrix_range; i++){
+		for(i = j-1; i >= 0; i--){
 		
 				if(path[i] != -1)
 						printf("%d ", path[i]);
 		}
+		
+
 		return distance[destination_node];
 		
 

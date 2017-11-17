@@ -1,8 +1,15 @@
 #include <stdio.h>
 
-
 #define INFINITE 9999
 
+
+/* Here is the dijkstra algorithm for counting the shortest path.  */
+int dijkstra(int source_node, int destination_node, int *m, int rowLine, int columnLine){
+
+		
+
+
+}   
 
 
 int main(int argc, char *argv[]){
@@ -45,6 +52,9 @@ int main(int argc, char *argv[]){
 		
 				MatrixTable[rowLine][columnLine] = 1;
 		}
+		
+		int *matrix_table = MatrixTable[0];
+
 
 
 		/* close the file and free pointer.  */
@@ -63,6 +73,17 @@ int main(int argc, char *argv[]){
 				printf("\n");
 		}
 		
+
+		/* Get the source node and destination node from user. */
+		int source_node = 0, destination_node = 0;
+		printf("\nEnter the source node number: ");
+		scanf("%d", &source_node);
+		printf("\nEnter the destination node number: ");
+		scanf("%d", &destination_node);
+		
+		// Transfer matrix data to dijkstra function.
+		dijkstra(source_node, destination_node, matrix_table, rowLine, columnLine);
+
 
 		return 0;
 

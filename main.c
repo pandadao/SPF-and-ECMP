@@ -1,11 +1,64 @@
 #include <stdio.h>
+#include<string.h>
 
 #define INFINITE 9999
 
 
 /* Here is the dijkstra algorithm for counting the shortest path.  */
-int dijkstra(int source_node, int destination_node, int *m, int rowLine, int columnLine){
+int dijkstra(int source_node, int destination_node, int matrix_range, int MatrixTable[matrix_range][matrix_range]){
+		
+		int distance[matrix_range], prev_node[matrix_range], i,m, min_dis, start, d,j;
+		int select[matrix_range];
+		char path[matrix_range];
 
+		for(i = 0; i< matrix_range; i++)
+				select[i] = 0;
+		
+		for(i = 0; i<matrix_range;i++){
+		
+				distance[i] = INFINITE;
+				prev_node[i] = -1;
+		}
+		start = source_node;
+		select[start] = 1;
+		distance[start] = 0;
+		while(select[destination_node] == 0){
+				
+				min_dis = INFINITE;
+				m = 0;
+				for(i=0; i < matrix_range; i++){
+				
+						d = distance[start] + MatrixTable[start][i];
+						if(d < distance[i] && select[i] == 0){
+						
+								distance[i] = d;
+								prev_node[i] = start;
+						}
+						if(min_dis > distance[i] && select[i] == 0){
+						
+								min_dis = distance[i];
+								m = i;
+						}
+				}
+				start = m;
+				select[start] = 1;
+
+		}
+		start = destination_node;
+		i = 0;
+		while(start != -1){
+		
+				path[i++] = start + 65;
+				start = prev_node[start];
+		}
+		path[i] = '\0';
+		//strrev(path);
+		for(i = 0; i< matrix_range; i++){
+		
+				if(path[i] != -1)
+						printf("%d ", path[i]);
+		}
+		return distance[destination_node];
 		
 
 
@@ -24,7 +77,7 @@ int main(int argc, char *argv[]){
 		
 		
 		/* Initial the matrix to save data about the network state.  */
-		int N = 0, M = 0;
+		int N = 0, M = 0, co;
 		int MatrixTable[matrix_range][matrix_range];
 		for(N = 0; N < matrix_range; N++){
 		
@@ -62,8 +115,14 @@ int main(int argc, char *argv[]){
 		
 		
 		/* Link become 1, others no change their state.    */
-		/* And show the matrix for check symmetry.  */
+		/* And show the matrix for check symmetry.         */
 		int row = 0, columns = 0;
+		
+		
+		
+		/*   
+		 *  Here is function to printf matrix about saving link information.
+		 *
 		for(row = 0; row<matrix_range;row++){
 		
 				for(columns = 0; columns < matrix_range; columns++){
@@ -71,7 +130,7 @@ int main(int argc, char *argv[]){
 						printf("%4d ", MatrixTable[row][columns]);
 				}
 				printf("\n");
-		}
+		}    */
 		
 
 		/* Get the source node and destination node from user. */
@@ -81,9 +140,9 @@ int main(int argc, char *argv[]){
 		printf("\nEnter the destination node number: ");
 		scanf("%d", &destination_node);
 		
-		// Transfer matrix data to dijkstra function.
-		dijkstra(source_node, destination_node, matrix_table, rowLine, columnLine);
-
+		/* Transfer matrix data to dijkstra function.     */
+		co = dijkstra(source_node, destination_node, matrix_range, MatrixTable);
+		printf("\nThe shortest path: %d\n", co);
 
 		return 0;
 

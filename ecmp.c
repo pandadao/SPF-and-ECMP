@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include<string.h>
+#include <stdbool.h>
 
 #define INFINITE 9999
+#define UNDEFINED -999
 
 
 /* Here is the dijkstra algorithm for counting the shortest path.  */
@@ -74,10 +76,34 @@ int dijkstra(int source_node, int destination_node, int matrix_range, int Matrix
 		
 
 		return distance[destination_node];
-		
-
 
 }   
+
+
+/* Implement ecmp algorithm.  */
+int ecmp(int source_node, int destination_node, int matrix_range, int MatrixTable[matrix_range][matrix_range], int SPB_cost){
+
+		int i = 0, j = 0, dist[matrix_range][matrix_range];
+		int visited[matrix_range], previous[matrix_range];
+
+		for(i = 0; i<matrix_range;i++){
+		
+				for(j = 0; j<matrix_range;j++){
+				
+						dist[i][j] = INFINITE;
+				}
+		}
+
+		for(i = 0; i< matrix_range; i++){
+		
+				visited[i] = false;
+				previous[i] = UNDEFINED;
+		}
+
+		
+		
+		return 0;
+}
 
 
 int main(int argc, char *argv[]){
@@ -157,6 +183,8 @@ int main(int argc, char *argv[]){
 		
 		/* Transfer matrix data to dijkstra function.     */
 		co = dijkstra(source_node, destination_node, matrix_range, MatrixTable);
+		co = ecmp(source_node, destination_node, matrix_range, MatrixTable, co);
+
 		printf("\nThe shortest path: %d\n", co);
 
 		return 0;

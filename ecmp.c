@@ -5,6 +5,8 @@
 #define INFINITE 9999
 #define UNDEFINED -999
 
+int stack[36],m = 1;
+
 
 /* Here is the dijkstra algorithm for counting the shortest path.  */
 int dijkstra(int source_node, int destination_node, int matrix_range, int MatrixTable[matrix_range][matrix_range]){
@@ -81,30 +83,31 @@ int dijkstra(int source_node, int destination_node, int matrix_range, int Matrix
 
 
 /* Implement ecmp algorithm.  */
-int ecmp(int source_node, int destination_node, int matrix_range, int MatrixTable[matrix_range][matrix_range], int SPB_cost){
-
-		int i = 0, j = 0, dist[matrix_range][matrix_range];
-		int visited[matrix_range], previous[matrix_range];
-
-		for(i = 0; i<matrix_range;i++){
+int ecmp(int matrix_range,int MatrixTable[matrix_range][matrix_range],int source_node, int destination_node,int shortest_cost){
 		
-				for(j = 0; j<matrix_range;j++){
+		int i = 0,j = 0;
+		for(i = 0;i< matrix_range; i++){
 				
-						dist[i][j] = INFINITE;
+				if(MatrixTable[source_node][i] == 1){
+						
+						if(i == destination_node){
+						
+								for(j = 0; j < m; j++){
+								
+										printf("%-3d", stack[j]);
+								}
+								printf("%-3d\n",destination_node);
+						}
+						else if(m < shortest_cost){
+						
+								stack[m] = i;
+								m++;
+								ecmp(matrix_range, MatrixTable, i, destination_node, shortest_cost);
+								m--;
+						}
 				}
 		}
 
-		for(i = 0; i< matrix_range; i++){
-		
-				visited[i] = false;
-				previous[i] = UNDEFINED;
-		}
-
-
-
-		
-		
-		return 0;
 }
 
 
@@ -185,9 +188,11 @@ int main(int argc, char *argv[]){
 		
 		/* Transfer matrix data to dijkstra function.     */
 		co = dijkstra(source_node, destination_node, matrix_range, MatrixTable);
-		co = ecmp(source_node, destination_node, matrix_range, MatrixTable, co);
+		printf("\nThe shortest path cost: %d\n\n\n", co);
 
-		printf("\nThe shortest path: %d\n", co);
+		stack[0] = source_node;
+		int shortest_cost = co;
+		ecmp(matrix_range, MatrixTable, source_node, destination_node, shortest_cost);
 
 		return 0;
 
